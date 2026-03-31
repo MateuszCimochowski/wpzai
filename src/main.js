@@ -46,8 +46,8 @@ function setupUI(world) {
   bindSlider('friction', config, 'FRICTION', 'frictionVal');
   bindSlider('maxDistance', config, 'MAX_DISTANCE', 'distVal');
 
-  for(let i=0; i<3; i++) {
-    for(let j=0; j<3; j++) {
+  for(let i=0; i<5; i++) {
+    for(let j=0; j<5; j++) {
       bindSlider(`m${i}${j}`, null, null, null, true, i, j);
     }
   }
@@ -65,8 +65,8 @@ function setupUI(world) {
   randBtn.addEventListener('click', () => {
     randomizeMatrix();
     // Update active UI sliders
-    for(let i=0; i<3; i++) {
-      for(let j=0; j<3; j++) {
+    for(let i=0; i<5; i++) {
+      for(let j=0; j<5; j++) {
         document.getElementById(`m${i}${j}`).value = config.interactionMatrix[i][j].toFixed(2);
       }
     }

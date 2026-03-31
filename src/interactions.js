@@ -1,8 +1,11 @@
 export const config = {
+  // Preset 5x5 matrix
   interactionMatrix: [
-    [0.2, 0.5, -0.3], 
-    [-0.5, 0.8, -0.1],
-    [0.1, -0.4, 0.4]
+    [0.2, 0.5, -0.3, 0.1, -0.2], 
+    [-0.5, 0.8, -0.1, 0.3, 0.4],
+    [0.1, -0.4, 0.4, -0.2, 0.1],
+    [-0.3, 0.1, 0.5, 0.4, -0.5],
+    [0.2, -0.1, 0.2, 0.1, 0.3]
   ],
   MAX_DISTANCE: 80,
   MIN_DISTANCE: 15,
@@ -11,8 +14,8 @@ export const config = {
 };
 
 export function randomizeMatrix() {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
       config.interactionMatrix[i][j] = (Math.random() - 0.5) * 2;
     }
   }

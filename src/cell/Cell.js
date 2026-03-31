@@ -7,11 +7,11 @@ export class Cell {
     this.vx = (Math.random() - 0.5) * 4;
     this.vy = (Math.random() - 0.5) * 4;
     
-    // 3 particle types for interaction matrix
-    this.type = type !== undefined ? type : Math.floor(Math.random() * 3);
+    // 5 particle types for interaction matrix
+    this.type = type !== undefined ? type : Math.floor(Math.random() * 5);
     
-    // Assign typical particle colors: Red, Green, Blue
-    const colors = ['#f44336', '#4CAF50', '#2196F3'];
+    // Assign typical particle colors: Red, Green, Blue, Yellow, Purple
+    const colors = ['#f44336', '#4CAF50', '#2196F3', '#FFEB3B', '#9C27B0'];
     this.color = colors[this.type];
     
     this.radius = 3; // Render as small dots
