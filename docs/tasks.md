@@ -14,3 +14,10 @@
 - [x] Apply attraction/repulsion forces based on distance and type
 - [x] Apply friction/damping to velocities
 - [x] Update Engine and World to integrate physics
+
+## Phase 3: Interactive UI Control Panel (Completed)
+- [x] Adapt physics files with mutable global `config` references
+- [x] Implement Universal `<15px` Short-Range Repulsion logic
+- [x] Setup HTML glass layer overlay and styled inputs
+- [x] Bind javascript DOM selectors iteratively across interaction scales
+- [x] Enable realtime particle count reset injection

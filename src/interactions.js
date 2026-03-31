@@ -1,15 +1,23 @@
-// Interaction Matrix defining attraction (positive) and repulsion (negative)
-// Types: 0 (Red), 1 (Green), 2 (Blue)
-export const interactionMatrix = [
-  [-0.5, 0.5, 0.0], // Red attracts Green, repels Red, ignores Blue
-  [0.5, -0.5, 0.5], // Green attracts Red & Blue, repels Green
-  [0.0, 0.5, -0.5]  // Blue attracts Green, repels Blue, ignores Red
-];
+export const config = {
+  // Preset matrix for interesting clusters / bacteria-like shapes
+  interactionMatrix: [
+    [0.2, 0.5, -0.3], 
+    [-0.5, 0.8, -0.1],
+    [0.1, -0.4, 0.4]
+  ],
+  MAX_DISTANCE: 80,
+  MIN_DISTANCE: 15, // Universal short-range repulsion boundary
+  FORCE_MULTIPLIER: 1.0,
+  FRICTION: 0.85
+};
 
-export const MAX_DISTANCE = 80;
-export const MIN_DISTANCE = 5; // Prevents infinite forces at zero distance
-export const FORCE_MULTIPLIER = 2.0;
-export const FRICTION = 0.85; // Damping applied every frame
+export function randomizeMatrix() {
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      config.interactionMatrix[i][j] = (Math.random() - 0.5) * 2; // Range -1.0 to 1.0
+    }
+  }
+}
 
 export function applyInteractions(particles) {
   for (let i = 0; i < particles.length; i++) {
@@ -25,23 +33,24 @@ export function applyInteractions(particles) {
       const dy = a.y - b.y;
       const distSq = dx * dx + dy * dy;
 
-      if (distSq > 0 && distSq < MAX_DISTANCE * MAX_DISTANCE) {
+      if (distSq > 0 && distSq < config.MAX_DISTANCE * config.MAX_DISTANCE) {
         const dist = Math.sqrt(distSq);
-        const safeDist = Math.max(dist, MIN_DISTANCE);
-        
-        // Normalize vector from B to A
-        const nx = dx / safeDist;
-        const ny = dy / safeDist;
+        const nx = dx / dist;
+        const ny = dy / dist;
 
-        // Positive matrix value represents attraction (moves A towards B => negative adjustment to B->A vector)
-        // Negative matrix value represents repulsion (moves A away from B => positive adjustment)
-        const interactionForce = interactionMatrix[a.type][b.type];
-        
-        // Decrease force smoothly as distance reaches MAX_DISTANCE
-        const forceMagnitude = interactionForce * (1 - safeDist / MAX_DISTANCE);
-        
-        fx += -nx * forceMagnitude * FORCE_MULTIPLIER;
-        fy += -ny * forceMagnitude * FORCE_MULTIPLIER;
+        if (dist < config.MIN_DISTANCE) {
+          // Sharp universal short-range repulsion
+          const forceMagnitude = (1 - dist / config.MIN_DISTANCE) * 3.0; 
+          fx += nx * forceMagnitude; 
+          fy += ny * forceMagnitude;
+        } else {
+          // Matrix interaction based on type outside minimum clamping dist
+          const interactionForce = config.interactionMatrix[a.type][b.type];
+          const forceMagnitude = interactionForce * (1 - (dist - config.MIN_DISTANCE) / (config.MAX_DISTANCE - config.MIN_DISTANCE));
+          
+          fx += -nx * forceMagnitude * config.FORCE_MULTIPLIER;
+          fy += -ny * forceMagnitude * config.FORCE_MULTIPLIER;
+        }
       }
     }
 
