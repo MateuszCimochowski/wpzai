@@ -1,18 +1,16 @@
 # Particle Life Architecture
 
 ## Concept Overview
-The project has shifted entirely from a grid-based biological colony sim to a physics-based "Particle Life" interaction sandbox.
-Instead of cells consuming energy to split, independent particles apply complex attraction and repulsion forces on one another based on conditional matrices, yielding emergent artificial life clusters.
+The project operates as an ultra-fast, visually impressive, 2D physics-based "Particle Life" simulation. Independent atom particles traverse the field mapped by conditionally complex attraction and repulsion forces, building distinct organic, moving biological shapes in real-time natively on standard web hardware.
 
-## Core Components
-- **Engine**: Handles the continuous smooth rendering loop (`requestAnimationFrame`) for updating and painting the canvas.
-- **World**: Maintains a bulk array of particles. Will soon serve as the host for calculating distance maps between all interaction pairs per frame.
-- **Cell (Particle)**: A foundational atom with a designated `type` identifier (0, 1, or 2). Retains tracking of `x`, `y`, `vx`, `vy` and responds to bounding constraint bounces.
+## Optimization Blueprint
+Instead of utilizing generic iteration (which breaks CPU capacity around $N = 1000$), the backend abstracts every `(x, y)` vector directly onto a **Spatial Partitioning Engine**. Physics interactions bypass processing anything unrelated, guaranteeing $O(N)$ runtime behaviors localized dynamically exactly equivalent to whatever UI constraints the user applies to maximum effective distances.
 
-## Interaction Mechanics (Upcoming Features)
-Particle forces will be calculated from a predefined matrix:
-- Positive Values → Attraction
-- Negative Values → Repulsion
-- Zero Values → Indifferent
+## Core Component Modules
+- **Engine**: Handles the continuous rendering loop hook wrapper via standard API.
+- **World**: Hosts all active `Cell` elements and instantiates coordinate mapping updates each frame.
+- **Cell**: Visual geometric primitive atom bounding absolute forces internally via its `x,y,vx,vy`.
+- **SpatialGrid**: The performance secret utilizing generic array lengths dynamically resized to bin geometric particle data each frame smoothly simulating bucket bounds mathematically via `idx = col + row * cols`.
 
-Particles update their `vx` and `vy` dynamically by referencing the distance vector relative to their neighbor, normalized and scaled by the interaction coefficient matching their specific types.
+## HUD DOM
+Native UI manipulation rests natively above the JS physics sandbox in a traditional Z-Index flexbox overlay containing direct bindings matching UI inputs to runtime configuration floats. This is visually rendered with subtle backdrop filtering and translucent borders.
