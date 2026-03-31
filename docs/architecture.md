@@ -1,17 +1,18 @@
-# Architecture
+# Particle Life Architecture
+
+## Concept Overview
+The project has shifted entirely from a grid-based biological colony sim to a physics-based "Particle Life" interaction sandbox.
+Instead of cells consuming energy to split, independent particles apply complex attraction and repulsion forces on one another based on conditional matrices, yielding emergent artificial life clusters.
 
 ## Core Components
-- **Engine**: Handles the simulation loop, canvas rendering, and timing.
-- **World**: Manages all entities (cells, organisms, food) and spatial updates.
-- **Cell**: Contains individual cell properties (position, energy, organismId).
-- **Organism**: Represents a group of linked cells, moving together and sharing energy.
-- **Food**: Resource particles that provide energy to organisms.
+- **Engine**: Handles the continuous smooth rendering loop (`requestAnimationFrame`) for updating and painting the canvas.
+- **World**: Maintains a bulk array of particles. Will soon serve as the host for calculating distance maps between all interaction pairs per frame.
+- **Cell (Particle)**: A foundational atom with a designated `type` identifier (0, 1, or 2). Retains tracking of `x`, `y`, `vx`, `vy` and responds to bounding constraint bounces.
 
-## Coordinate System
-- **Grid Mesh**: The simulation operates on a fixed-size grid (e.g., 20px squares). All entities have integer coordinates representing grid column and row. Movement is discrete (tile-by-tile) rather than continuous floating points.
+## Interaction Mechanics (Upcoming Features)
+Particle forces will be calculated from a predefined matrix:
+- Positive Values → Attraction
+- Negative Values → Repulsion
+- Zero Values → Indifferent
 
-## Simulation Loop
-1. **Update World**: Process interactions (e.g., cell/food collision).
-2. **Handle Merging**: Detect if loose cells or organisms are close enough to merge.
-3. **Move Organisms**: Update positions based on organism logic.
-4. **Update Energy**: Drain energy passively and add from food; handle cell splits if energy gets low.
+Particles update their `vx` and `vy` dynamically by referencing the distance vector relative to their neighbor, normalized and scaled by the interaction coefficient matching their specific types.

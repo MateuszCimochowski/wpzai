@@ -1,23 +1,17 @@
-# Progress Log
+# Particle Life Simulator Refactoring
 
-## Step 1: Initialization (Completed)
-- Created project using Vite.
-- Set up core directory structure (`/src`, `/tests`, `/docs`).
-- Created documentation files (`progress.md`, `tasks.md`, `architecture.md`).
-- Canvas rendering setup complete.
-- Implemented a few moving cells (no merging yet).
+## Phase 1: Wipe & Foundation (Completed)
+- Removed `Organism.js` and `Food.js` along with old tests.
+- Stripped grid logic, tile locking, merging, and shared energy concepts from the entire system.
+- Rewrote `Engine.js` for smooth `requestAnimationFrame` un-ticked continuous rendering loops.
+- Overwrote `Cell.js` to act as independent particles. They are now generated with one of 3 arbitrary types, corresponding colors (Red, Green, Blue), and smooth float velocities.
+- Setup test `particle.test.js` to ensure baseline velocity physics function cleanly.
+- System is currently populated with 300 free-flowing, bouncing particles.
+- Awaiting signal to advance and implement the force Interaction Matrix logic.
 
-## Step 2: Core Mechanics (Completed)
-- Created Organism class to group cells together.
-- Implemented distance calculation and auto-merging in World update loop.
-- Organisms now move as a single unit and bounce off boundaries together.
-- Added Vitest tests for merging logic.
-
-## Step 2.5: Grid Mesh Migration (Completed)
-- Migrated continuous 2D coordinate system (`vx`/`vy`) to a discrete tile-grid.
-- Re-styled cells and organisms as pixel squares aligned to the mesh.
-- Implemented background wireframe rendering in Engine loop.
-- Updated merge distance to calculate pure Manhattan adjacency.
-- Refactored bounds bouncing to guarantee exact grid alignment.
-
-
+## Phase 2: Interaction Dynamics (Completed)
+- Authored `interactions.js` detailing the cross-type Attraction/Repulsion Matrix.
+- Engineered `O(N^2)` particle distance vector calculation tracking mapped distances scaling force multipliers smoothly out to `MAX_DISTANCE`.
+- Included a `FRICTION` coefficient to organically bound drift speeds.
+- Hooked `applyInteractions` logic directly to the Engine physics bounds inside `World.update()`.
+- Authored passing Vitest validations to explicitly ensure logical repulsion and attraction interactions trigger properly.

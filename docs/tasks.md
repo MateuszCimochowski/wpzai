@@ -1,27 +1,16 @@
-# Tasks Checklist
+# Refactoring to Particle Life Simulator
 
-## Phase 1: Setup & Basics (Current)
-- [x] Project setup (Vite, directory structure)
-- [x] Create documentation files
-- [x] Basic canvas rendering setup
-- [x] Implement simple cell movement (no merging yet)
-- [x] Wait for "next step"
+## Step 1: Base Mechanics (Completed)
+- [x] Disable organism/merging logic and remove specific files
+- [x] Remove old grid constraints and grid tick loop from engine
+- [x] Introduce continuous float velocity (vx, vy) to cells
+- [x] Restore boundary bouncing logic
+- [x] Change visualization to Type-based color circles (Red, Green, Blue)
+- [x] Remove old tests and add velocity update tests
 
-## Phase 2: Core Mechanics
-- [x] Implement organism system (groups of cells)
-- [x] Implement auto-merging of close cells
-- [x] Ensure organism movement as a single unit
-- [x] Write tests for merging logic
-
-## Phase 2.5: Grid Mesh Migration (Current)
-- [x] Migrate coordinate system to discrete tile-grid
-- [x] Render squares for cells and mesh wireframe background
-- [x] Lock movement and collisions to integer steps
-- [x] Refactor tests for Manhattan distances
-
-## Phase 3: Energy & Food
-- [ ] Implement food system
-- [ ] Organism shared energy updates
-- [ ] Implement organism splitting on low energy
-- [ ] Write tests for splitting logic
-- [ ] Write tests for energy system
+## Step 2: Interaction Rules (Completed)
+- [x] Create interaction matrix constants
+- [x] Implement distance calculation loop between particles
+- [x] Apply attraction/repulsion forces based on distance and type
+- [x] Apply friction/damping to velocities
+- [x] Update Engine and World to integrate physics
